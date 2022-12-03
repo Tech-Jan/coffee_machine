@@ -30,58 +30,65 @@ resources = {
     "coffee": 100,
 }
 
+
 def get_resources(resources_dict):
-    '''prints  the ressources that we have in stock'''
+    """prints  the resources that we have in stock"""
     for key, value in resources_dict.items():
         print(f"{key} = {value}")
 
-def get_ingredients(order):
-    #print(MENU[order]["ingredients"])
-    return MENU[order]["ingredients"]
+
+def get_ingredients(order_ing):
+    # print(MENU[order]["ingredients"])
+    return MENU[order_ing]["ingredients"]
 
 
-def get_cost(order):
-    return MENU[order]["cost"]*100
+def get_cost(order_cost):
+    return MENU[order_cost]["cost"]*100
+
 
 def check_resources(needed_resources):
     enough = True
-    for key , value in needed_resources.items():
+    for key, value in needed_resources.items():
         if resources[key] < value:
-            print(f"{key} missing weve about {resources[key] - value}  to less. check report \n"
-                  f"or\n"
-                  f"use the order 'refill")
+            print(f"{key} missing we've about {resources[key] - value}  to less.")
             enough = False
+    if not enough:
+        print(" check report and use the command refill to add some resources")
     return enough
 
-def use_resources(order):
-    needed_resources = get_ingredients(order)
-    #print(needed_resources)
-    if check_resources(needed_resources):
-        for key , value in needed_resources.items():
-            resources[key] -= value
-            #print(resources[key])
 
-def enough_money(money, order):
-    cost=get_cost(order)
-    if money >= cost:
-        print(f"heres your change {(money-cost)/100}$")
+def use_resources(order_res):
+    needed_resources = get_ingredients(order_res)
+    # print(needed_resources)
+    if check_resources(needed_resources):
+        for key, value in needed_resources.items():
+            resources[key] -= value
+            # print(resources[key])
+
+
+def enough_money(money_check, order_mon):
+    cost = get_cost(order_mon)
+    if money_check >= cost:
+        print(f"here's your change {(money_check - cost) / 100}$")
         return True
     else:
-        print(f"nice try. not enough money given !!! the price is {cost/100}$, u gave {money/100}$ \n"
-              f"you were missin {(cost-money)/100}$ dollars")
+        print(f"nice try. not enough money given !!! the price is {cost/100}$, u gave {money_check / 100}$ \n"
+              f"you were missin {(cost - money_check) / 100}$ dollars")
         return False
 
+
 def insert_money():
-    money = []
-    money_sum=0
-    money.append(int(input("give pennys")))
-    money.append(int(input("give Dime"))*10)
-    money.append(int(input("give Nickels"))*5)
-    money.append(int(input("give Quartas"))*25)
-    for coin in money:
+    coins_list = []
+    money_sum = 0
+    coins_list.append(int(input("give penny's")))
+    coins_list.append(int(input("give Dime")) * 10)
+    coins_list.append(int(input("give Nickels")) * 5)
+    coins_list.append(int(input("give Quartas")) * 25)
+    for coin in coins_list:
         money_sum += coin
-    #print (round(money_sum, 3))
+    # print (round(money_sum, 3))
     return round(money_sum, 3)
+
 
 is_on = True
 while is_on:
@@ -95,7 +102,8 @@ while is_on:
             money = insert_money()
             if enough_money(money, order):
                 use_resources(order)
-            #print(resources)
+                print(f"hmm heres you freshly pressed {order} ")
+            # print(resources)
     elif order == "off":
         is_on = False
     elif order == "refill":
@@ -104,4 +112,3 @@ while is_on:
 
     else:
         print(f"we dont serve {order} in here bru")
-
