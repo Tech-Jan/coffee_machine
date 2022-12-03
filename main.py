@@ -105,10 +105,3 @@ while is_on:
     else:
         print(f"we dont serve {order} in here bru")
 
-
-
-# TODO: 1 ask Input
-
-# TODO: 2 get report what in inventory when input
-
-# TODO: 2 calculate Money
