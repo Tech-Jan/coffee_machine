@@ -57,7 +57,7 @@ def check_resources(needed_resources):
     return enough
 
 
-def use_resources(order_res):
+def make_coffee(order_res):
     needed_resources = get_ingredients(order_res)
     # print(needed_resources)
     if check_resources(needed_resources):
@@ -81,19 +81,19 @@ def insert_money():
     """Returns the inserted money in cent"""
     coins_list = []
     money_sum = 0
-    coins_list.append(int(input("give penny's")))
-    coins_list.append(int(input("give Dime")) * 10)
-    coins_list.append(int(input("give Nickels")) * 5)
-    coins_list.append(int(input("give Quartas")) * 25)
+    coins_list.append(int(input("give penny's ")))
+    coins_list.append(int(input("give Dime ")) * 10)
+    coins_list.append(int(input("give Nickels ")) * 5)
+    coins_list.append(int(input("give Quartas ")) * 25)
     for coin in coins_list:
         money_sum += coin
     # print (round(money_sum, 3))
     return round(money_sum, 3)
 
-
+resources["Coins"] = 0
 is_on = True
 while is_on:
-    order = input("what u want my friend? latte? espresso? cappuccino?")
+    order = input("what u want my friend? latte? espresso? cappuccino?\n")
     money = 0
     if order == "report":
         get_resources(resources)
@@ -101,9 +101,11 @@ while is_on:
         if check_resources(get_ingredients(order)):
             print(f"price is {get_cost(order)/100}$ please throw in some coins")
             money = insert_money()
-            if enough_money(money, order):
-                use_resources(order)
-                print(f"hmm heres you freshly pressed {order} ")
+            resources["Coins"] += money
+            if enough_money(resources["Coins"] , order):
+                make_coffee(order)
+                resources["Coins"] = 0
+                print(f"hmm heres you freshly pressed {order} ☕ 🥵")
             # print(resources)
     elif order == "off":
         is_on = False
