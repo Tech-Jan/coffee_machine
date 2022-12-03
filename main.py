@@ -78,6 +78,7 @@ def enough_money(money_check, order_mon):
 
 
 def insert_money():
+    """Returns the inserted money in cent"""
     coins_list = []
     money_sum = 0
     coins_list.append(int(input("give penny's")))
